@@ -114,12 +114,12 @@ public class Configuration : MonoBehaviour {
 	
 	public void NextScene(){
 		if (loaded && timeToLoad)
-			SceneManager.LoadScene ("Selection2");
+			SceneManager.LoadScene ("Selection");
 	}
 
 	public void OnClick(){
 		if (loaded)
-			SceneManager.LoadScene ("Selection2");
+			SceneManager.LoadScene ("Selection");
 	}
 
 	public IEnumerator PrepareForStart(int second){
