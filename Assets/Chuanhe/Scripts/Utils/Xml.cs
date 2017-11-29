@@ -34,6 +34,19 @@ public class Xml
 		return Attribute(node, "version");
 	}
 
+	public static XElement GetChild (XElement node, int index){
+		if (node == null)
+			return null;
+		var nodes = node.Elements ();
+		int cur = 0;
+		foreach(XElement n in nodes){
+			if (cur == index)
+				return n;
+			cur++;
+		}
+		return null;
+	}
+
 	public static XElement GetChildByAttribute (XElement node, string attr, string value){
 		if (node == null)
 			return null;

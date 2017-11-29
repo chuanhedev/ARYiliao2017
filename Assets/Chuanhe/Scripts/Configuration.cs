@@ -33,6 +33,10 @@ public class Configuration : MonoBehaviour {
 	private string configStr;
 	private bool versionLoaded = false;
 	public List<GameObject> prefabs = new List<GameObject>();
+	private bool loading = true;
+	private GameObject canvas;
+	private GameObject loadingPanel;
+	private string versionUrl;
 
 	// Use this for initialization
 	//	void Start () {
@@ -40,7 +44,9 @@ public class Configuration : MonoBehaviour {
 	//	}
 
 	void Awake(){
+		canvas = GameObject.Find ("Canvas");
 		Director.version = new Version (version);
+		loadingPanel = canvas.GetChildByName ("LoadingPanel");
 		Director.environment = environment;
 		Configuration.instant = this;
 		if (environment == Environment.Development) {
@@ -48,6 +54,7 @@ public class Configuration : MonoBehaviour {
 		} else {
 			Request.RemoteUrl = prodRemoteUrl;
 		}
+		versionUrl = Request.RemoteUrl + "/version.xml";
 		for (int i = 0; i < prefabs.Count; i++) {
 			AssetManager.assets.Add (prefabs [i].name, prefabs [i]);
 		}
@@ -63,7 +70,7 @@ public class Configuration : MonoBehaviour {
 
 	IEnumerator readConfig ()
 	{ 
-		yield return Request.ReadRemote ("version.xml", (str)=>{
+		yield return Request.ReadUrl (versionUrl, (str)=>{
 			Debug.Log(str);
 			XElement verXml = XDocument.Parse(str).Root;
 			Version v = new Version(Xml.Attribute(verXml, "version"));
@@ -88,21 +95,31 @@ public class Configuration : MonoBehaviour {
 			Director.style.uiGrey = uiGrey;
 			OnLoaded();
 		} else {
+			loading = false;
 			if (I18n.language == Language.Chinese) {
 				message.text = "初始化失败，请检查网络连接";
 			}else
 				message.text = "Failed to initialise, please check your Internet Connection";
 		}
 	}
-
+	
+	void Update(){
+		if (loading) {
+			int numDot = Mathf.FloorToInt (Time.frameCount / 10) % 3 + 1;
+			message.text = "正在加载资源";
+			for (int i = 0; i < numDot; i++)
+				message.text += ".";
+		}
+	}
+	
 	public void NextScene(){
 		if (loaded && timeToLoad)
-			SceneManager.LoadScene ("Selection");
+			SceneManager.LoadScene ("Selection2");
 	}
 
 	public void OnClick(){
 		if (loaded)
-			SceneManager.LoadScene ("Selection");
+			SceneManager.LoadScene ("Selection2");
 	}
 
 	public IEnumerator PrepareForStart(int second){
@@ -112,7 +129,9 @@ public class Configuration : MonoBehaviour {
 	}
 
 	public void OnLoaded(){
+		loading = false;
 		loaded = true;
+		OnClick ();
 
 		//WWW www = new WWW (Request.Read ());
 		//StartCoroutine(LoadBg());
@@ -120,7 +139,10 @@ public class Configuration : MonoBehaviour {
 	}
 
 	public void InitVersionPanel(bool forceUpdate, string url){
-		OKCancelPanel panel = Director.LoadPrefab ("OKCancelPanel", GameObject.Find("Canvas")).GetComponent<OKCancelPanel>();
+		OKCancelPanel panel = Director.LoadPrefab ("OKCancelPanel", canvas).GetComponent<OKCancelPanel>();
+		if (loadingPanel != null)
+			loadingPanel.SetActive (false);
+		panel.gameObject.SetActive (true);
 		panel.autoTranslate = false;
 		//panel.gameObject.SetActive (false);
 		if (forceUpdate) {

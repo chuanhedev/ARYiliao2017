@@ -28,13 +28,30 @@ public class Request
 
 	public static IEnumerator ReadRemote (string str, Action<string> handler, Action failedHandler = null)
 	{
-		string url = RemoteUrl + "/" + str;
-		Logger.Log ("loading " + url);
-		WWW www = new WWW (Utils.ApplyRandomVersion (url));
+//		string url = RemoteUrl + "/" + str;
+//		Logger.Log ("loading " + url);
+//		WWW www = new WWW (Utils.ApplyRandomVersion (url));
+//		current = www;
+//		yield return www;
+//		if (!String.IsNullOrEmpty (www.error)) {
+//			Logger.Log ("unabled to load " + url);
+//			if (failedHandler != null)
+//				failedHandler.Invoke ();
+//		} else {
+//			Logger.Log ("Loaded successfully");
+//			handler.Invoke (www.text);
+//		}
+		yield return ReadUrl (RemoteUrl + "/" + str, handler, failedHandler);
+	}
+
+	public static IEnumerator ReadUrl (string str, Action<string> handler, Action failedHandler = null)
+	{
+		Logger.Log ("loading " + str);
+		WWW www = new WWW (Utils.ApplyRandomVersion (str));
 		current = www;
 		yield return www;
 		if (!String.IsNullOrEmpty (www.error)) {
-			Logger.Log ("unabled to load " + url);
+			Logger.Log ("unabled to load " + str);
 			if (failedHandler != null)
 				failedHandler.Invoke ();
 		} else {

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public static class GameObjectExtension {
 
@@ -50,4 +51,10 @@ public static class GameObjectExtension {
 		}
 	}
 
+	public static void SetAlpha(this GameObject o, float a){
+		a = Mathf.Clamp (a, 0, 1);
+		Color c = o.GetComponent<Image> ().color;
+		c.a = a;
+		o.GetComponent<Image> ().color = c;
+	}
 }
