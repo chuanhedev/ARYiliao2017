@@ -55,6 +55,6 @@ public class Version {
 	}
 
 	public string ToString(){
-		return "Version: " + versionString;
+		return versionString;
 	}
 }

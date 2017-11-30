@@ -188,7 +188,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 67928002}
-  - component: {fileID: 67928003}
   - component: {fileID: 67928004}
   m_Layer: 0
   m_Name: SceneController
@@ -210,35 +209,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &67928003
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 67928001}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 295998eed87571b409e30acb8e6c7e0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selectionItem: {fileID: 1021765368945310, guid: 377c27f64f7d9dd4fbe36ba5005cf709,
-    type: 2}
-  itemsPanel: {fileID: 0}
-  progressPanel: {fileID: 205174627}
-  okCancelPanel: {fileID: 1787066818}
-  phone: {fileID: 0}
-  email: {fileID: 0}
-  contactUs: {fileID: 0}
-  tabs:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  tabButtons:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  activeTabIndex: -1
-  header: {fileID: 0}
 --- !u!114 &67928004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1566,15 +1536,28 @@ Prefab:
       value: 
       objectReference: {fileID: 21300000, guid: ef5b5faa7aa76c44a9b181746a1fcd9e,
         type: 3}
-    - target: {fileID: 114287221288302196, guid: ff122fc804252804c9693a01d74ffea9,
+    - target: {fileID: 0}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 67928004}
+    - target: {fileID: 0}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnItemClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114066404275221058, guid: ff122fc804252804c9693a01d74ffea9,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 67928004}
-    - target: {fileID: 114287221288302196, guid: ff122fc804252804c9693a01d74ffea9,
+    - target: {fileID: 114066404275221058, guid: ff122fc804252804c9693a01d74ffea9,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OnItemClick
+      objectReference: {fileID: 0}
+    - target: {fileID: 114396098824081634, guid: ff122fc804252804c9693a01d74ffea9,
+        type: 2}
+      propertyPath: m_RaycastTarget
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ff122fc804252804c9693a01d74ffea9, type: 2}
@@ -2330,7 +2313,7 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 114287221288302196, guid: ff122fc804252804c9693a01d74ffea9,
+    - target: {fileID: 114066404275221058, guid: ff122fc804252804c9693a01d74ffea9,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

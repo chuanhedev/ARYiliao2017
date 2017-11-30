@@ -60,12 +60,15 @@ public class SelectionSceneController2 : MonoBehaviour
 	{
 		yield return Request.ReadPersistent ("ui/ui.xml", LayoutLoaded);
 		if (layout != null) {
-//			XElement itemsEle = layout.Element ("items");
-//			var items = itemsEle.Elements ();
-//			int index = 0;
-//			foreach (XElement item in items) {
-//				string desc = Xml.Attribute (item, "desc");
-//				string title = Xml.Attribute (item, "title");
+			XElement itemsEle = layout.Element ("items");
+			var items = itemsEle.Elements ();
+			int index = 0;
+			foreach (XElement item in items) {
+				string desc = Xml.Attribute (item, "desc");
+				string title = Xml.Attribute (item, "title");
+				Logger.Log (desc + " " + title, "green");
+				slider.SetItemDetails (index, I18n.Translate (title), I18n.Translate (desc));
+				index++;
 //				string help = Xml.Attribute (item, "help");
 //				string icon = Xml.Attribute (item, "icon");
 //				GameObject obj = GameObject.Instantiate (selectionItem);
@@ -89,7 +92,7 @@ public class SelectionSceneController2 : MonoBehaviour
 ////				itemComp.image.sprite = Sprite.Create(www.texture, new Rect(0,0,www.texture.width, www.texture.height), new Vector2(0,0));
 //				StartCoroutine(LoadIcon ("ui/"+icon, itemComp.image));
 //				index++;
-//			}
+			}
 		}
 	}
 
@@ -183,6 +186,6 @@ public class SelectionSceneController2 : MonoBehaviour
 	}
 
 	public void OnWebsiteClick(){
-		Application.OpenURL (website.text);
+		Application.OpenURL ("http://" + website.text);
 	}
 }
